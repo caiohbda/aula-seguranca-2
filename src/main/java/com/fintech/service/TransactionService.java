@@ -27,10 +27,10 @@ public class TransactionService {
     @Transactional
     public TransactionResponse transfer(TransferRequest request, String authenticatedCpf) {
         if (!authenticatedCpf.equals(request.getFromCpf())) {
-            throw new SecurityException("You can only transfer money from your own account");
+            throw new SecurityException("Você só pode transferir dinheiro da sua própria conta");
         }
         if (request.getFromCpf().equals(request.getToCpf())) {
-            throw new IllegalArgumentException("Sender and receiver must be different accounts");
+            throw new IllegalArgumentException("A conta de origem e a de destino devem ser diferentes");
         }
 
         // Lock accounts in consistent order to avoid deadlocks
@@ -40,15 +40,15 @@ public class TransactionService {
                 ? request.getToCpf() : request.getFromCpf();
 
         Account first  = accountRepository.findByCpfWithLock(firstCpf)
-                .orElseThrow(() -> new IllegalArgumentException("Account not found for CPF: " + firstCpf));
+                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada para o CPF: " + firstCpf));
         Account second = accountRepository.findByCpfWithLock(secondCpf)
-                .orElseThrow(() -> new IllegalArgumentException("Account not found for CPF: " + secondCpf));
+                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada para o CPF: " + secondCpf));
 
         Account sender   = first.getCpf().equals(request.getFromCpf()) ? first : second;
         Account receiver = first.getCpf().equals(request.getToCpf())   ? first : second;
 
         if (sender.getBalance().compareTo(request.getAmount()) < 0) {
-            throw new IllegalArgumentException("Insufficient balance");
+            throw new IllegalArgumentException("Saldo insuficiente para realizar a transferência");
         }
 
         sender.setBalance(sender.getBalance().subtract(request.getAmount()));

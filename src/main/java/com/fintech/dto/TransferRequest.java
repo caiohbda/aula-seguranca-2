@@ -23,6 +23,7 @@ public class TransferRequest {
 
     private String description;
 
+    @NotBlank(message = "A senha é obrigatória")
     private String password;
 
     public TransferRequest() {}

@@ -48,6 +48,7 @@
                 <label for="password">Sua senha</label>
                 <input type="password" id="password" th:field="*{password}"
                        placeholder="Digite sua senha para confirmar" required/>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-msg"></span>
             </div>
             <div class="btn-row">
                 <button type="submit" class="btn btn-success">Confirmar Transferência</button>
