@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Histórico — FinanceApp</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/dashboard}">💸 FinanceApp</a>
+    <div class="navbar-links">
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/transfer}">Transferir</a>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Sair</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div class="card-title">📋 Histórico de Transações</div>
+
+        <div th:if="${transactions.empty}" class="empty-state">
+            Nenhuma transação encontrada ainda.<br/>
+            <a th:href="@{/transfer}" class="btn btn-primary" style="margin-top:1rem;display:inline-block">
+                Fazer primeira transferência
+            </a>
+        </div>
+
+        <div th:unless="${transactions.empty}" class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tipo</th>
+                        <th>Contraparte</th>
+                        <th>Valor</th>
+                        <th>Descrição</th>
+                        <th>Data/Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tx : ${transactions}">
+                        <td th:text="${tx.id}">1</td>
+                        <td>
+                            <span th:if="${tx.senderCpf == myCpf}" class="badge badge-sent">Enviado</span>
+                            <span th:unless="${tx.senderCpf == myCpf}" class="badge badge-received">Recebido</span>
+                        </td>
+                        <td>
+                            <span th:if="${tx.senderCpf == myCpf}"
+                                  th:text="${tx.receiverName + ' (' + tx.receiverCpf + ')'}"></span>
+                            <span th:unless="${tx.senderCpf == myCpf}"
+                                  th:text="${tx.senderName + ' (' + tx.senderCpf + ')'}"></span>
+                        </td>
+                        <td>
+                            <strong th:if="${tx.senderCpf == myCpf}"
+                                    style="color:#c0392b"
+                                    th:text="'- R$ ' + ${#numbers.formatDecimal(tx.amount, 1, 'POINT', 2, 'COMMA')}"></strong>
+                            <strong th:unless="${tx.senderCpf == myCpf}"
+                                    style="color:#2e7d32"
+                                    th:text="'+ R$ ' + ${#numbers.formatDecimal(tx.amount, 1, 'POINT', 2, 'COMMA')}"></strong>
+                        </td>
+                        <td th:text="${tx.description != null ? tx.description : '—'}">—</td>
+                        <td th:text="${#temporals.format(tx.createdAt, 'dd/MM/yyyy HH:mm')}">—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

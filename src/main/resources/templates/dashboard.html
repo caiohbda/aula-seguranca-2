@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard — FinanceApp</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/dashboard}">💸 FinanceApp</a>
+    <div class="navbar-links">
+        <a th:href="@{/transfer}">Transferir</a>
+        <a th:href="@{/transactions}">Histórico</a>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Sair</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+    <div class="card">
+        <div class="card-title">Olá, <span th:text="${account.name}">Usuário</span> 👋</div>
+        <p style="color:#666;margin-bottom:.4rem">CPF: <strong th:text="${account.cpf}">—</strong></p>
+        <p style="color:#666;margin-bottom:.5rem">Saldo disponível:</p>
+        <div class="balance-badge">
+            R$ <span th:text="${#numbers.formatDecimal(account.balance, 1, 'POINT', 2, 'COMMA')}">0,00</span>
+        </div>
+        <div class="btn-row">
+            <a th:href="@{/transfer}" class="btn btn-primary">Fazer Transferência</a>
+            <a th:href="@{/transactions}" class="btn btn-secondary">Ver Histórico</a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
