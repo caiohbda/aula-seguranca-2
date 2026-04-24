@@ -102,9 +102,8 @@ public class WebController {
             return "transfer";
         }
 
-        if (request.getPassword() == null || request.getPassword().isBlank()
-                || !accountService.verifyPassword(cpf, request.getPassword())) {
-            bindingResult.reject("transfer.error", "Senha incorreta. Por favor, confirme sua senha.");
+        if (!accountService.verifyPassword(cpf, request.getPassword() != null ? request.getPassword() : "")) {
+            bindingResult.reject("transfer.error", "Falha na autenticação. Por favor, verifique sua senha.");
             return "transfer";
         }
 
