@@ -1,0 +1,223 @@
+/* ── Reset & Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    min-height: 100vh;
+}
+
+/* ── Navbar ───────────────────────────────────────────────────────────────── */
+.navbar {
+    background: #1a1a2e;
+    padding: 0.9rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+.navbar-brand {
+    color: #e2b96f;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+}
+
+.navbar-links { display: flex; gap: 1.5rem; align-items: center; }
+
+.navbar-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color .2s;
+}
+.navbar-links a:hover { color: #e2b96f; }
+
+.navbar-links form { margin: 0; }
+.navbar-links button {
+    background: none;
+    border: 1px solid #e2b96f;
+    color: #e2b96f;
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background .2s, color .2s;
+}
+.navbar-links button:hover { background: #e2b96f; color: #1a1a2e; }
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+.container {
+    max-width: 860px;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    margin-bottom: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: #1a1a2e;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 0.75rem;
+}
+
+/* ── Balance badge ────────────────────────────────────────────────────────── */
+.balance-badge {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 0.6rem 1.4rem;
+    border-radius: 10px;
+    margin: 0.5rem 0 1.25rem;
+}
+
+/* ── Buttons row ──────────────────────────────────────────────────────────── */
+.btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.btn {
+    display: inline-block;
+    padding: 0.55rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: opacity .2s, transform .1s;
+}
+.btn:hover { opacity: .88; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary   { background: #1a1a2e; color: #fff; }
+.btn-success   { background: #2e7d32; color: #fff; }
+.btn-secondary { background: #e2b96f; color: #1a1a2e; }
+.btn-danger    { background: #c0392b; color: #fff; }
+
+/* ── Form ─────────────────────────────────────────────────────────────────── */
+.form-group { margin-bottom: 1.1rem; }
+
+label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: #444;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color .2s;
+    outline: none;
+}
+input:focus { border-color: #1a1a2e; }
+
+.error-msg {
+    color: #c0392b;
+    font-size: 0.82rem;
+    margin-top: 0.3rem;
+}
+
+/* ── Alerts ───────────────────────────────────────────────────────────────── */
+.alert {
+    padding: 0.85rem 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 1.2rem;
+    font-size: 0.93rem;
+}
+.alert-danger  { background: #fdecea; color: #c0392b; border: 1px solid #f5c6cb; }
+.alert-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+.alert-info    { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+
+/* ── Auth page (login/register) ───────────────────────────────────────────── */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+}
+
+.auth-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem 2.8rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+
+.auth-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 0.25rem;
+}
+.auth-subtitle {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 1.8rem;
+}
+
+.auth-link {
+    display: block;
+    text-align: center;
+    margin-top: 1.2rem;
+    color: #555;
+    font-size: 0.9rem;
+}
+.auth-link a { color: #1a1a2e; font-weight: 600; text-decoration: none; }
+.auth-link a:hover { text-decoration: underline; }
+
+/* ── Table ────────────────────────────────────────────────────────────────── */
+.table-wrapper { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+thead tr { background: #1a1a2e; color: #e2b96f; }
+thead th { padding: 0.75rem 1rem; text-align: left; font-weight: 600; white-space: nowrap; }
+
+tbody tr { border-bottom: 1px solid #f0f2f5; transition: background .15s; }
+tbody tr:hover { background: #fafafa; }
+tbody td { padding: 0.7rem 1rem; }
+
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+.badge-sent     { background: #fdecea; color: #c0392b; }
+.badge-received { background: #e8f5e9; color: #2e7d32; }
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #999;
+    font-size: 1rem;
+}

@@ -2,6 +2,7 @@ com/fintech/repository/TransactionRepository.class
 com/fintech/model/Transaction.class
 com/fintech/controller/TransactionController.class
 com/fintech/dto/AccountResponse.class
+com/fintech/controller/WebController.class
 com/fintech/dto/TransactionResponse.class
 com/fintech/dto/AccountRequest.class
 com/fintech/config/SecurityConfig.class

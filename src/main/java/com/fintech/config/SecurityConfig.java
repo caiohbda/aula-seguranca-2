@@ -4,6 +4,7 @@ import com.fintech.service.AccountService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -45,21 +46,47 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+    /**
+     * REST API security chain — stateless, HTTP Basic Auth.
+     * CSRF disabled: stateless API has no session cookies, so CSRF attacks cannot occur.
+     */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable) // Safe: stateless REST API uses HTTP Basic Auth — no session cookies, so CSRF attacks cannot occur
+            .securityMatcher("/api/**")
+            .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Allow account creation without authentication
-                .requestMatchers(HttpMethod.POST, "/accounts").permitAll()
-                // H2 console (development only)
-                .requestMatchers("/h2-console/**").permitAll()
-                // All other endpoints require authentication
+                .requestMatchers(HttpMethod.POST, "/api/accounts").permitAll()
                 .anyRequest().authenticated()
             )
-            .httpBasic(Customizer.withDefaults())
+            .httpBasic(Customizer.withDefaults());
+        return http.build();
+    }
+
+    /**
+     * Web / Thymeleaf security chain — session-based, form login, CSRF enabled.
+     */
+    @Bean
+    @Order(2)
+    public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/register", "/login", "/css/**", "/h2-console/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .defaultSuccessUrl("/dashboard", true)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+            )
             .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         return http.build();

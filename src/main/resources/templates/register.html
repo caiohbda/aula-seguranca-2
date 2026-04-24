@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cadastro — FinanceApp</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-title">💸 FinanceApp</div>
+        <div class="auth-subtitle">Crie sua conta gratuita com R$ 100,00 de saldo inicial</div>
+
+        <form th:action="@{/register}" th:object="${accountRequest}" method="post">
+            <div class="form-group">
+                <label for="name">Nome completo</label>
+                <input type="text" id="name" th:field="*{name}"
+                       placeholder="João da Silva" required/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-msg"></span>
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF (somente números)</label>
+                <input type="text" id="cpf" th:field="*{cpf}"
+                       placeholder="12345678900" maxlength="11" required/>
+                <span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}" class="error-msg"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha (mín. 6 caracteres)</label>
+                <input type="password" id="password" th:field="*{password}"
+                       placeholder="••••••" required/>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-msg"></span>
+            </div>
+
+            <div th:if="${#fields.hasErrors('global')}" class="alert alert-danger"
+                 th:errors="*{global}"></div>
+
+            <button type="submit" class="btn btn-success" style="width:100%;margin-top:.5rem">
+                Criar Conta
+            </button>
+        </form>
+
+        <div class="auth-link">
+            Já tem conta? <a th:href="@{/login}">Entrar</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

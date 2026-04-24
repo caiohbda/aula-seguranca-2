@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login — FinanceApp</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-title">💸 FinanceApp</div>
+        <div class="auth-subtitle">Entre com seu CPF e senha</div>
+
+        <div th:if="${param.error}" class="alert alert-danger">
+            CPF ou senha inválidos.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-info">
+            Você saiu com sucesso.
+        </div>
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">CPF (somente números)</label>
+                <input type="text" id="username" name="username"
+                       placeholder="12345678900" maxlength="11" required/>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password"
+                       placeholder="••••••" required/>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:.5rem">
+                Entrar
+            </button>
+        </form>
+
+        <div class="auth-link">
+            Não tem conta? <a th:href="@{/register}">Cadastre-se</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
