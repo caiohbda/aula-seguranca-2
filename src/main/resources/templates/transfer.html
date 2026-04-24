@@ -44,6 +44,11 @@
                 <input type="text" id="description" th:field="*{description}"
                        placeholder="Ex: pagamento aluguel"/>
             </div>
+            <div class="form-group">
+                <label for="password">Sua senha</label>
+                <input type="password" id="password" th:field="*{password}"
+                       placeholder="Digite sua senha para confirmar" required/>
+            </div>
             <div class="btn-row">
                 <button type="submit" class="btn btn-success">Confirmar Transferência</button>
                 <a th:href="@{/dashboard}" class="btn btn-secondary">Cancelar</a>
