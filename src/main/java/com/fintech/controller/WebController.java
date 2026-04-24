@@ -98,11 +98,11 @@ public class WebController {
         String cpf = authentication.getName();
         request.setFromCpf(cpf);
 
-        if (bindingResult.hasFieldErrors("toCpf") || bindingResult.hasFieldErrors("amount")) {
+        if (bindingResult.hasErrors()) {
             return "transfer";
         }
 
-        if (!accountService.verifyPassword(cpf, request.getPassword() != null ? request.getPassword() : "")) {
+        if (!accountService.verifyPassword(cpf, request.getPassword())) {
             bindingResult.reject("transfer.error", "Falha na autenticação. Por favor, verifique sua senha.");
             return "transfer";
         }
