@@ -7,6 +7,7 @@ import com.fintech.dto.TransferRequest;
 import com.fintech.service.AccountService;
 import com.fintech.service.TransactionService;
 import jakarta.validation.Valid;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,9 @@ public class WebController {
 
     @GetMapping("/")
     public String index(Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
+        if (authentication != null
+                && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken)) {
             return "redirect:/dashboard";
         }
         return "redirect:/login";

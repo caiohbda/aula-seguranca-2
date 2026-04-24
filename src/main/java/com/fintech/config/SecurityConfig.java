@@ -48,7 +48,8 @@ public class SecurityConfig {
 
     /**
      * REST API security chain — stateless, HTTP Basic Auth.
-     * CSRF disabled: stateless API has no session cookies, so CSRF attacks cannot occur.
+     * CSRF is intentionally disabled: the API uses HTTP Basic Auth with no session cookies,
+     * making CSRF attacks impossible (no session to hijack). This chain only applies to /api/**.
      */
     @Bean
     @Order(1)
