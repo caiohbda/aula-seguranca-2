@@ -38,6 +38,13 @@ public class AccountService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
+    public boolean verifyPassword(String cpf, String rawPassword) {
+        Account account = accountRepository.findByCpf(cpf)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found for CPF: " + cpf));
+        return passwordEncoder.matches(rawPassword, account.getPassword());
+    }
+
+    @Transactional(readOnly = true)
     public AccountResponse getAccountByCpf(String cpf) {
         Account account = accountRepository.findByCpf(cpf)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found for CPF: " + cpf));

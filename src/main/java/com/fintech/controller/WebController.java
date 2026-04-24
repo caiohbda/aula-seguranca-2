@@ -102,6 +102,11 @@ public class WebController {
             return "transfer";
         }
 
+        if (!accountService.verifyPassword(cpf, request.getPassword() != null ? request.getPassword() : "")) {
+            bindingResult.reject("transfer.error", "Falha na autenticação. Por favor, verifique sua senha.");
+            return "transfer";
+        }
+
         try {
             transactionService.transfer(request, cpf);
             redirectAttributes.addFlashAttribute("successMessage", "Transferência realizada com sucesso!");

@@ -23,6 +23,8 @@ public class TransferRequest {
 
     private String description;
 
+    private String password;
+
     public TransferRequest() {}
 
     public String getFromCpf() { return fromCpf; }
@@ -36,4 +38,7 @@ public class TransferRequest {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
